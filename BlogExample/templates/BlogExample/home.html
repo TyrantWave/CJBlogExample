@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if blogs.count > 0 %}
+        {% for blog in blogs %}
+            <div class="blog-short">
+                <div class="title">
+                    <div style="float:left">
+                        <h1><a href='/blog/{{ blog.id }}'>{{ blog.title }}</a></h1>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <div style="float:right">
+                            <a href="/edit/{{ blog.id }}" class="btn">Edit</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <span>{% if blog.author %}{{ blog.author.first_name }}&nbsp;-
+                    &nbsp;{% endif %}{{ blog.published }}</span>
+
+                <p>{{ blog.body|linebreaks }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-content">Couldn't find any blogs :(</div>
+    {% endif %}
+{% endblock %}

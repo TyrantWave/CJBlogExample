@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="/edit/{% if form.instance.pk %}{{ form.instance.pk }}{% endif %}" method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        <table>
+            <tr>
+                <td>{{ form.title.label }}</td>
+                <td>{{ form.title }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.published.label }}</td>
+                <td>{{ form.published }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.author.label }}</td>
+                <td>{{ form.author }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.body.label }}</td>
+                <td>{{ form.body }}</td>
+            </tr>
+            <tr>
+                <td/>
+                <td><input type="submit" class="btn" value="Save"/>
+                    {% if form.instance.pk %}
+                        <a href="/delete/{{ form.instance.pk }}" class="btn-red">Delete</a>
+                    {% endif %}
+                    <a href="/" class="btn">Cancel</a></td>
+            </tr>
+        </table>
+
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.datetimepicker.css"/ >
+    <script src="{{ STATIC_URL }}scripts/jquery.js"></script>
+    <script src="{{ STATIC_URL }}scripts/jquery.datetimepicker.js"></script>
+    <script>
+        $('.datetimepicker').datetimepicker({
+            format: 'Y-m-d H:i'
+        });
+    </script>
+{% endblock %}
