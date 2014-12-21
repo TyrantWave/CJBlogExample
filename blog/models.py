@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Blog(models.Model):
-    """ Basic BlogExample entry - pub date, title, entry.
+    """ Basic blog entry - pub date, title, entry.
     """
     title = models.CharField(max_length=200)
     body = models.TextField()

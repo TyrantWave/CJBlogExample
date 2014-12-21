@@ -11,7 +11,7 @@ from models import Blog, BlogForm
 def logout_user(request):
     """Basic logout functionality."""
     logout(request)
-    return redirect('BlogExample.views.home')
+    return redirect('blog.views.home')
 
 
 def home(request):
@@ -20,12 +20,12 @@ def home(request):
     context = {
         'blogs': blogs
     }
-    return render(request, 'BlogExample/home.html', context)
+    return render(request, 'blog/home.html', context)
 
 
 @login_required(login_url='/login/')
 def edit(request, blog_id=None):
-    """ Create a new BlogExample entry.
+    """ Create a new blog entry.
     """
     if blog_id is not None:
         blog = Blog.objects.get(id=blog_id)
@@ -38,12 +38,12 @@ def edit(request, blog_id=None):
             form = BlogForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('BlogExample.views.home')
+            return redirect('blog.views.home')
         else:
             context = {
                 'form': form
             }
-            return render(request, 'BlogExample/edit.html', context)
+            return render(request, 'blog/edit.html', context)
     if blog:
         form = BlogForm(instance=blog)
     else:
@@ -51,23 +51,23 @@ def edit(request, blog_id=None):
     context = {
         'form': form
     }
-    return render(request, 'BlogExample/edit.html', context)
+    return render(request, 'blog/edit.html', context)
 
 
 @login_required(login_url='/login/')
 def delete(request, blog_id):
-    """ Delete a given BlogExample.
+    """ Delete a given blog.
     """
     blog = Blog.objects.get(id=blog_id)
     if blog:
         blog.delete()
-    return redirect('BlogExample.views.home')
+    return redirect('blog.views.home')
 
 
 def show_blog(request, blog_id):
-    """ Show a BlogExample detail."""
+    """ Show a blog detail."""
     blog = Blog.objects.get(id=blog_id)
     context = {
-        'BlogExample': blog
+        'blog': blog
     }
-    return render(request, 'BlogExample/blog.html', context)
+    return render(request, 'blog/blog.html', context)
